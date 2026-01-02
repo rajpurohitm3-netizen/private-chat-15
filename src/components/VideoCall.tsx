@@ -39,6 +39,8 @@ export function VideoCall({
   const [isSpeakerOn, setIsSpeakerOn] = useState(true);
   const [hasRemoteVideo, setHasRemoteVideo] = useState(false);
   const [facingMode, setFacingMode] = useState<"user" | "environment">("user");
+  const [selfVideoPosition, setSelfVideoPosition] = useState({ x: 0, y: 0 });
+  const containerRef = useRef<HTMLDivElement>(null);
   
     const myVideo = useRef<HTMLVideoElement>(null);
     const userVideo = useRef<HTMLVideoElement>(null);
@@ -327,8 +329,9 @@ export function VideoCall({
     <div className={`fixed inset-0 z-[100] ${isMinimized ? 'pointer-events-none' : 'bg-black'}`}>
       <audio ref={remoteAudio} autoPlay playsInline />
       
-      <motion.div 
-        layout
+<motion.div 
+          ref={containerRef}
+          layout
         drag={isMinimized}
         dragElastic={0.1}
         dragMomentum={false}
@@ -385,12 +388,18 @@ export function VideoCall({
           </div>
         )}
 
-        {/* My Video - Small window on right side */}
+        {/* My Video - Draggable window */}
         {initialCallType === "video" && stream && !isMinimized && (
           <motion.div 
             drag
-            dragConstraints={{ left: -1000, right: 0, top: 0, bottom: 1000 }}
-            className="absolute top-6 right-6 w-28 sm:w-36 md:w-44 aspect-[3/4] rounded-2xl overflow-hidden border-2 border-white/20 shadow-2xl z-20 bg-black cursor-move"
+            dragMomentum={false}
+            dragElastic={0.1}
+            dragConstraints={containerRef}
+            onDragEnd={(_, info) => {
+              setSelfVideoPosition({ x: info.point.x, y: info.point.y });
+            }}
+            whileDrag={{ scale: 1.05, zIndex: 50 }}
+            className="absolute top-6 right-6 w-28 sm:w-36 md:w-44 aspect-[3/4] rounded-2xl overflow-hidden border-2 border-white/20 shadow-2xl z-20 bg-black cursor-grab active:cursor-grabbing"
           >
             <video 
               ref={myVideo} 

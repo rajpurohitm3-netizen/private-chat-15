@@ -9,7 +9,7 @@ import {
   MessageCircle, Video as VideoIcon, Phone, MapPin, Settings, LogOut, Users, Bell,
   Search, ChevronRight, Clock, Shield, Zap, Globe, Activity, Plus,
   Home, Camera, Mic, Send, X, Menu, User, Heart, Star, Sparkles, ArrowLeft,
-  Radio, AlertTriangle, ExternalLink, Flame, Film, CalendarHeart
+  Radio, AlertTriangle, ExternalLink, Flame, Film, CalendarHeart, UserPlus, Headphones, Lock
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AvatarDisplay } from "@/components/AvatarDisplay";
@@ -21,8 +21,10 @@ import { WatchParty } from "@/components/WatchParty";
 import { SpecialDays } from "@/components/SpecialDays";
 import { PrivateSafe } from "@/components/PrivateSafe";
 import { PasswordGate } from "@/components/PasswordGate";
+import { FriendRequests } from "@/components/FriendRequests";
+import { MusicPlayer } from "@/components/MusicPlayer";
 
-type ActiveView = "dashboard" | "chat" | "vault" | "calls" | "watchparty" | "calendar" | "settings";
+type ActiveView = "dashboard" | "chat" | "vault" | "calls" | "watchparty" | "calendar" | "connections" | "music" | "settings";
 
 interface UserDashboardViewProps {
   session: any;
@@ -77,6 +79,7 @@ export function UserDashboardView({ session, privateKey }: UserDashboardViewProp
     const [systemConfig, setSystemConfig] = useState<any>({});
     const [unviewedSnapshots, setUnviewedSnapshots] = useState<any[]>([]);
     const [chatSearchQuery, setChatSearchQuery] = useState("");
+    const [friends, setFriends] = useState<string[]>([]);
     const notificationSound = useRef<HTMLAudioElement | null>(null);
     const presenceChannelRef = useRef<any>(null);
 
