@@ -9,7 +9,7 @@ import {
   MessageCircle, Video as VideoIcon, Phone, MapPin, Settings, LogOut, Users, Bell,
   Search, ChevronRight, Clock, Shield, Zap, Globe, Activity, Plus,
   Home, Camera, Mic, Send, X, Menu, User, Heart, Star, Sparkles, ArrowLeft,
-  Radio, AlertTriangle, ExternalLink, Flame, Film, CalendarHeart, Headphones, Rocket, ChevronDown
+  Radio, AlertTriangle, ExternalLink, Flame, Film, CalendarHeart
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AvatarDisplay } from "@/components/AvatarDisplay";
@@ -21,9 +21,8 @@ import { WatchParty } from "@/components/WatchParty";
 import { SpecialDays } from "@/components/SpecialDays";
 import { PrivateSafe } from "@/components/PrivateSafe";
 import { PasswordGate } from "@/components/PasswordGate";
-import { MusicPlayer } from "@/components/MusicPlayer";
 
-type ActiveView = "dashboard" | "chat" | "vault" | "calls" | "watchparty" | "calendar" | "music" | "settings" | "advanced";
+type ActiveView = "dashboard" | "chat" | "vault" | "calls" | "watchparty" | "calendar" | "settings";
 
 interface UserDashboardViewProps {
   session: any;
@@ -365,20 +364,14 @@ export function UserDashboardView({ session, privateKey }: UserDashboardViewProp
     setSidebarOpen(false);
   };
 
-  const [advancedExpanded, setAdvancedExpanded] = useState(false);
-
   const navItems = [
     { id: "dashboard", icon: Home, label: "Chatify" },
     { id: "chat", icon: MessageCircle, label: "Signals", badge: unreadCount },
     { id: "vault", icon: Shield, label: "Vault" },
     { id: "calls", icon: Phone, label: "Uplink" },
-    { id: "settings", icon: Settings, label: "Entity" },
-  ];
-
-  const advancedItems = [
     { id: "watchparty", icon: Film, label: "Cinema" },
     { id: "calendar", icon: CalendarHeart, label: "Memories" },
-    { id: "music", icon: Headphones, label: "Music" },
+    { id: "settings", icon: Settings, label: "Entity" },
   ];
 
   if (!myProfile) {
